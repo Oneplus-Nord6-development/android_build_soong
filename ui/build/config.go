@@ -2044,7 +2044,11 @@ func (c *configImpl) KatiBin() string {
 	return c.PrebuiltBuildTool(binName)
 }
 
-func (c *configImpl) NinjaBin() string {
+func (c *configImpl) NinjaBin() string {/* SRA custom ninja begin */
+	if customNinja, ok := c.environ.Get("CUSTOM_NINJA_BIN"); ok && customNinja != "" {
+		return customNinja
+	}
+/* SRA custom ninja end */
 	binName := "ninja"
 	if c.UseABFS() {
 		binName = "ninjago"
